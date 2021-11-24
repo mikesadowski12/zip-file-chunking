@@ -10,7 +10,7 @@
 * `zipAssembler.js` contains the algorithm for assembling the file out of the buffer chunks (output is in the root directory of this project as `rebuilt.docx`, `rebuilt.pptx`, `rebuilt.xlsx`)
 
 ### Requirements
-* `node v14`
+* `node v14.15.1`
 
 ### USAGE
 * Run `node server.js` in root directory of this project
