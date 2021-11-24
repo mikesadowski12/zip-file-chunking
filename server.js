@@ -16,8 +16,8 @@ app.listen(port, () => {
   // poc(excelFile);
 
   chunker(wordFile).forEach(chunk => console.log({
-    length: chunk.chunk.length,
-    hash:chunk.hash
+    length: chunk.data.length,
+    hash: chunk.hash
   }));
 
   // chunker(powerPointFile).forEach(chunk => console.log({

@@ -37,7 +37,7 @@ const saveChunk = (chunk) => {
 
   chunks.push({
     hash: spookyhash.hash128(chunk).toString('base64'),
-    chunk,
+    data: chunk,
   });
 }
 
