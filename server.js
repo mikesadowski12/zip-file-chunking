@@ -19,5 +19,18 @@ app.listen(port, () => {
   // poc(powerPointFile);
   // poc(excelFile);
 
-  chunker(wordFile);
+  chunker(wordFile).forEach(chunk => console.log({
+    length: chunk.chunk.length,
+    hash:chunk.hash
+  }));
+
+  // chunker(powerPointFile).forEach(chunk => console.log({
+  //   length: chunk.chunk.length,
+  //   hash:chunk.hash
+  // }));
+
+  // chunker(excelFile).forEach(chunk => console.log({
+  //   length: chunk.chunk.length,
+  //   hash:chunk.hash
+  // }));
 });
