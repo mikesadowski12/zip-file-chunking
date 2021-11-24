@@ -1,10 +1,8 @@
 ## FILE-CHUNKING
-* This app is intended to test chunking a zip file (i.e. office files `.docx`, `.pptx`, `.xlsx`) according to the zip file specification
+* This app is intended to test chunking a zip file (i.e. office files `.docx`, `.pptx`, `.xlsx`) according to the zip file specification (https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT)
 * It chunks the `file header` + `file data` for each file in the zip, and finally the `central directory` located at the end of the zip file
 * The chunk ID is generated via spooky hash + base64 encoding (https://www.npmjs.com/package/spookyhash)
 * The file is also re-assembled as an office file (either `.docx`, `.pptx`, `.xlsx`) at the very end
-
-https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT
 
 ### USAGE
 * `zipChunkerPoc.js` contains the proof of concept for the foundation of the chunking algorithm
