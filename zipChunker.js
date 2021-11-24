@@ -15,13 +15,16 @@ const findCentralDirectorySignature = (start) => {
   return buffer.readUInt32LE(start) === centralDirectoryHeaderSignatureToDecimal ? true : false;
 }
 
-const findNextLocalFileHeaderSignature = (start) => {
+const findFileHeaderSignature = (start) => {
+  return buffer.readUInt32LE(start) === localFileHeaderSignatureToDecimal ? true : false;
+}
+
+const findNextSignature = (start) => {
   let ptr = start;
   let done = false;
 
   while (!done) {
-    buffer.readUInt32LE(ptr) != localFileHeaderSignatureToDecimal && !findCentralDirectorySignature(ptr) ? ptr++ : done = true;
-    // console.log('ptr=', ptr);
+    !findFileHeaderSignature(ptr) && !findCentralDirectorySignature(ptr) ? ptr++ : done = true;
   }
 
   return ptr;
@@ -50,7 +53,7 @@ const chunker = (file) => {
       console.log('fileHeaderChunk size:', fileHeaderChunk.length);
       console.log('fileHeaderChunk hash:', spookyhash.hash128(fileHeaderChunk).toString('base64'));
 
-      const offsetEndOfFileData = findNextLocalFileHeaderSignature(offset + dataDescriptorSize);
+      const offsetEndOfFileData = findNextSignature(offset + dataDescriptorSize);
 
       const fileDataChunk = buffer.slice(offset, offsetEndOfFileData);
       hash.update(fileDataChunk);
