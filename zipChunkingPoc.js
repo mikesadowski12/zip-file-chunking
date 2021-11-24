@@ -52,7 +52,7 @@ const poc = (file) => {
     const offsetStartFileToFilename = 30;
     const offsetStartFileToExtraFields = offsetStartFileToFilename + fileNameLength;
     const fileHeaderChunkSize = offsetStartFileToExtraFields + extraFieldLength;
-    console.log('fileHeaderChunkSize: ', fileHeaderChunkSize);
+    console.log('fileHeaderChunkSize:', fileHeaderChunkSize);
 
     const fileHeaderChunk = buffer.slice(0, fileHeaderChunkSize);
     // console.log(chunk);
@@ -60,7 +60,7 @@ const poc = (file) => {
 
     const hash = new spookyhash.Hash();
     hash.update(fileHeaderChunk);
-    console.log('fileHeaderChunk hash: ', spookyhash.hash128(fileHeaderChunk).toString('base64'));
+    console.log('fileHeaderChunk hash:', spookyhash.hash128(fileHeaderChunk).toString('base64'));
 
     console.log('--');
     /*
@@ -84,11 +84,11 @@ const poc = (file) => {
 
     const fileDataChunkSize = offsetFromStartToEndFileData - fileHeaderChunkSize;
 
-    console.log('fileDataChunkSize: ', fileDataChunkSize);
+    console.log('fileDataChunkSize:', fileDataChunkSize);
 
     const fileDataChunk = buffer.slice(fileHeaderChunkSize, offsetFromStartToEndFileData);
     hash.update(fileDataChunk);
-    console.log('fileDataChunk hash: ', spookyhash.hash128(fileDataChunk).toString('base64'));
+    console.log('fileDataChunk hash:', spookyhash.hash128(fileDataChunk).toString('base64'));
 
     console.log('--');
     done = false;
@@ -100,11 +100,11 @@ const poc = (file) => {
     }
 
     const centralDirectoryChunkSize = buffer.length - offsetFromStartToCentralDirectory;
-    console.log('centralDirectoryChunkSize: ', centralDirectoryChunkSize);
+    console.log('centralDirectoryChunkSize:', centralDirectoryChunkSize);
 
     const centralDirectoryChunk = buffer.slice(offsetFromStartToCentralDirectory, buffer.length);
     hash.update(centralDirectoryChunk);
-    console.log('centralDirectoryChunk hash: ', spookyhash.hash128(centralDirectoryChunk).toString('base64'));
+    console.log('centralDirectoryChunk hash:', spookyhash.hash128(centralDirectoryChunk).toString('base64'));
   });
 };
 
