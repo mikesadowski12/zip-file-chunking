@@ -52,7 +52,7 @@ const poc = (file) => {
     const offsetStartFileToFilename = 30;
     const offsetStartFileToExtraFields = offsetStartFileToFilename + fileNameLength;
     const fileHeaderChunkSize = offsetStartFileToExtraFields + extraFieldLength;
-    console.log('fileHeaderChunkSize:', fileHeaderChunkSize);
+    console.log('fileHeaderChunk size:', fileHeaderChunkSize);
 
     const fileHeaderChunk = buffer.slice(0, fileHeaderChunkSize);
     // console.log(chunk);
@@ -84,7 +84,7 @@ const poc = (file) => {
 
     const fileDataChunkSize = offsetFromStartToEndFileData - fileHeaderChunkSize;
 
-    console.log('fileDataChunkSize:', fileDataChunkSize);
+    console.log('fileDataChunk size:', fileDataChunkSize);
 
     const fileDataChunk = buffer.slice(fileHeaderChunkSize, offsetFromStartToEndFileData);
     hash.update(fileDataChunk);
@@ -100,7 +100,7 @@ const poc = (file) => {
     }
 
     const centralDirectoryChunkSize = buffer.length - offsetFromStartToCentralDirectory;
-    console.log('centralDirectoryChunkSize:', centralDirectoryChunkSize);
+    console.log('centralDirectoryChunk size:', centralDirectoryChunkSize);
 
     const centralDirectoryChunk = buffer.slice(offsetFromStartToCentralDirectory, buffer.length);
     hash.update(centralDirectoryChunk);
