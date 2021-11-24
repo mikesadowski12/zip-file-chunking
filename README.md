@@ -9,7 +9,7 @@
 * `zipChunker.js` contains the chunking algorithm
 * `zipAssembler.js` contains the algorithm for assembling the file out of the buffer chunks (output is in the root directory of this project as `rebuilt.docx`, `rebuilt.pptx`, `rebuilt.xlsx`)
 
-### Requirements
+### REQUIREMENTS
 * node `v14.15.1`
 
 ### USAGE
