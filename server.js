@@ -3,7 +3,7 @@ const express = require('express');
 const port = 3000;
 const app = express();
 
-const { poc } = require('./zipChunkingPoc');
+const { poc } = require('./zipChunkerPoc');
 const { chunker } = require('./zipChunker');
 const { assemble } = require('./zipAssembler');
 
