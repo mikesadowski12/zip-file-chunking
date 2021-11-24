@@ -67,6 +67,9 @@ const chunker = (file) => {
     startOfChunk = offset;
   }
 
+  const centralDirectoryChunk = buffer.slice(offset, buffer.length);
+  saveChunk(centralDirectoryChunk);
+
   return chunks;
 };
 
