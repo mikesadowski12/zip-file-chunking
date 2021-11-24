@@ -68,6 +68,21 @@ app.listen(port, () => {
 
     const hash = new spookyhash.Hash();
     hash.update(chunk);
-    console.log(spookyhash.hash128(chunk).toString('base64'));
+    console.log('hash: ', spookyhash.hash128(chunk).toString('base64'));
+
+    /*
+      * Data descriptor:
+      *
+      *  crc-32                          4 bytes
+      *  compressed size                 4 bytes
+      *  uncompressed size               4 bytes
+      *
+      *  Final offset from end of file header to start of file data = 12 bytes
+      *  File data can be an arbitrary length, need to loop until next file header signature is found
+    */
+    const dataDeescriptorSize = 12;
+    const offsetFromStartToFileData = chunkSize + dataDeescriptorSize;
+    const test = buffer.readUInt32LE(offsetFromStartToFileData + 365);
+    console.log('test: ', test);
   });
 });
