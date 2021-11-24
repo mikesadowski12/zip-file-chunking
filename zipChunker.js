@@ -11,12 +11,17 @@ const centralDirectoryHeaderSignatureToDecimal = 33639248; // 0x02014b50 (hex) =
 
 let buffer;
 
+const findCentralDirectorySignature = (start) => {
+  return buffer.readUInt32LE(start) === centralDirectoryHeaderSignatureToDecimal ? true : false;
+}
+
 const findNextLocalFileHeaderSignature = (start) => {
   let ptr = start;
   let done = false;
 
   while (!done) {
-    buffer.readUInt32LE(ptr) != localFileHeaderSignatureToDecimal ? ptr++ : done = true;
+    buffer.readUInt32LE(ptr) != localFileHeaderSignatureToDecimal && !findCentralDirectorySignature(ptr) ? ptr++ : done = true;
+    // console.log('ptr=', ptr);
   }
 
   return ptr;
@@ -33,18 +38,12 @@ const chunker = (file) => {
 
     let offset = 0;
     let startOfChunk = offset;
-    // 12 files
-    for (let i = 0; i <= 10; i ++) {
-      console.log('offset:', offset);
-      console.log('buffer.readUInt32LE(offset)', buffer.readUInt32LE(offset));
+
+    while (!findCentralDirectorySignature(offset)) {
       let fileNameLength = buffer.readUInt16LE(offset + offsetToFilenameLength);
       let extraFieldLength = buffer.readUInt16LE(offset + offsetToExtraFieldLength);
 
-      offset += offsetToFilename;
-      const fileName = buffer.toString('utf8', offset, offset + (fileNameLength * 2));
-      console.log('fileName: ', fileName);
-
-      offset += fileNameLength + extraFieldLength;
+      offset += offsetToFilename + fileNameLength + extraFieldLength;
 
       const fileHeaderChunk = buffer.slice(startOfChunk, offset);
       hash.update(fileHeaderChunk);
