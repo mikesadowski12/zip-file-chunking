@@ -1,23 +1,23 @@
 const fs = require('fs');
 const spookyhash = require('spookyhash');
 
-const offsetToFilenameLength = 26;
-const offsetToExtraFieldLength = 28;
-const offsetToFilename = 30;
-const dataDescriptorSize = 12;
+const OFFSETTOFILENAMELENGTH = 26;
+const OFFSETTOEXTRAFIELDLENGTH = 28;
+const OFFSETTOFILENAME = 30;
+const DATADESCRIPTORSIZE = 12;
 
-const localFileHeaderSignatureToDecimal = 67324752; // 0x04034b50 (hex) = 67324752 (dec)
-const centralDirectoryHeaderSignatureToDecimal = 33639248; // 0x02014b50 (hex) = 33639248 (dec)
+const LOCALFILEHEADERSIGNATURE = 67324752; // 0x04034b50 (hex) = 67324752 (dec)
+const CENTRALDIRECTORYHEADERSIGNATURE = 33639248; // 0x02014b50 (hex) = 33639248 (dec)
 
 let buffer;
 const chunks = [];
 
 const findCentralDirectorySignature = (start) => {
-  return buffer.readUInt32LE(start) === centralDirectoryHeaderSignatureToDecimal ? true : false;
+  return buffer.readUInt32LE(start) === CENTRALDIRECTORYHEADERSIGNATURE ? true : false;
 }
 
 const findFileHeaderSignature = (start) => {
-  return buffer.readUInt32LE(start) === localFileHeaderSignatureToDecimal ? true : false;
+  return buffer.readUInt32LE(start) === LOCALFILEHEADERSIGNATURE ? true : false;
 }
 
 const findNextSignature = (start) => {
@@ -50,15 +50,15 @@ const chunker = (file) => {
   buffer = Buffer.from(data);
 
   while (!findCentralDirectorySignature(offset)) {
-    let fileNameLength = buffer.readUInt16LE(offset + offsetToFilenameLength);
-    let extraFieldLength = buffer.readUInt16LE(offset + offsetToExtraFieldLength);
+    let fileNameLength = buffer.readUInt16LE(offset + OFFSETTOFILENAMELENGTH);
+    let extraFieldLength = buffer.readUInt16LE(offset + OFFSETTOEXTRAFIELDLENGTH);
 
-    offset += offsetToFilename + fileNameLength + extraFieldLength;
+    offset += OFFSETTOFILENAME + fileNameLength + extraFieldLength;
 
     const fileHeaderChunk = buffer.slice(startOfChunk, offset);
     saveChunk(fileHeaderChunk);
 
-    const offsetEndOfFileData = findNextSignature(offset + dataDescriptorSize);
+    const offsetEndOfFileData = findNextSignature(offset + DATADESCRIPTORSIZE);
 
     const fileDataChunk = buffer.slice(offset, offsetEndOfFileData);
     saveChunk(fileDataChunk);
