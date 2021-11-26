@@ -7,6 +7,8 @@ const { poc } = require('./zipChunkerPoc');
 const { chunker } = require('./zipChunker');
 const { assemble } = require('./zipAssembler');
 
+const { chunker2 } = require('./zipChunker2');
+
 const wordFile = 'data/Word/MainContent/FileStream.docx';
 const powerPointFile = 'data/PowerPoint/MainContent/FileStream.pptx';
 const excelFile = 'data/Excel/MainContent/FileStream.xlsx';
@@ -27,7 +29,9 @@ app.listen(port, () => {
   // poc(powerPointFile);
   // poc(excelFile);
 
-  rebuildFile(wordFile, '.docx');
+  // rebuildFile(wordFile, '.docx');
   // rebuildFile(powerPointFile, '.pptx');
   // rebuildFile(excelFile, '.xlsx');
+
+  chunker2(wordFile);
 });
